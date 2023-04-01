@@ -95,9 +95,12 @@
 				"${file}",
 				"${fileDirname}\\file_system.c",
 				"${fileDirname}\\network_windows.c",
+				"${fileDirname}\\datetime.c",
+				"${fileDirname}\\windows.c",
+				"${fileDirname}\\audio_windows.c",
 				"-o",
 				"${fileDirname}\\${fileBasenameNoExtension}.exe",
-                
+                "-lwinmm",
                 "-lws2_32",
 			],
 			"options": {

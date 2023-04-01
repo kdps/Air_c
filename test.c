@@ -1,7 +1,10 @@
 #include <stdio.h>
+#include <winsock2.h>
 #include "file_system.h"
 #include "network_windows.h"
-#include <winsock2.h>
+#include "datetime.h"
+#include "windows.h"
+#include "audio_windows.h"
 
 int main()
 {
@@ -25,6 +28,14 @@ int main()
   char *http_response;
 
   http_response = http_send_raw_and_receive(PF_INET, "www.google.co.kr", 80, "GET / HTTP/1.1\r\nHost: www.google.co.kr\r\n\r\n");
+
+  printf("%s", http_response);
+  printf("\n");
+
+  printf("%d", get_timestamp());
+  printf("\n");
+
+  printf("%d", get_screen_width());
 
   return 0;
 }

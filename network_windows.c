@@ -28,7 +28,9 @@ int *winsocket_startup() {
     int ready;
     WSADATA wsa;
 
-    ready = WSAStartup(MAKEWORD(2, 2), &wsa);
+    int version = MAKEWORD(2, 2);
+
+    ready = WSAStartup(version, &wsa);
 
     if (ready != 0) {
         return 0;

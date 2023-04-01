@@ -7,6 +7,9 @@
         "winsock2.h": "c",
         "network_windows.h": "c",
         "windows.h": "c",
-        "*.tcc": "c"
+        "*.tcc": "c",
+        "datetime.h": "c",
+        "audio_windows.h": "c",
+        "mmsystem.h": "c"
     }
 }
