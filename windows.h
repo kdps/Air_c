@@ -19,4 +19,6 @@ extern void append_menu(HMENU hMenu, char *title);
 
 extern void append_menu_with_sub(HMENU hMenu, char *title, HMENU sub);
 
+extern HWND create_textbox(HWND hwnd);
+
 #endif

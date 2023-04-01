@@ -38,6 +38,23 @@ void paint_text(HDC hdc, HWND hwnd, PAINTSTRUCT ps, char *str, int x, int y) {
     DeleteObject(hFont);
 }
 
+HWND create_textbox(HWND hwnd) {
+    return CreateWindowEx(
+        WS_EX_CLIENTEDGE, // dwExStyle
+        "EDIT", 
+        "", 
+        WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL, 
+        0, 
+        0, 
+        100, 
+        100, 
+        hwnd, 
+        (HMENU)101, 
+        GetModuleHandle(NULL), 
+        NULL
+    );
+}
+
 HWND create_general_window(HINSTANCE hInstance, char *className, char *windowTitle) {
     return CreateWindow(
 		_T(className),	//lpClassName

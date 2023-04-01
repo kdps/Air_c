@@ -66,6 +66,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 	switch (iMsg)
 	{
+        case WM_COMMAND:
+			switch(LOWORD(wParam))
+            {
+            }
+
+			break;
 		case WM_LBUTTONDOWN:
 			break;
 		case WM_CREATE:
@@ -77,6 +83,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 			append_menu_with_sub(hMenu, "&FirstMenu", hSubMenu);
 
 			SetMenu(hwnd, hMenu);
+
+			create_textbox(hwnd);
+
 			break;
 		case WM_PAINT:
 			hdc = BeginPaint(hwnd, &ps);
