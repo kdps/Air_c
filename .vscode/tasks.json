@@ -102,6 +102,7 @@
 				"${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "-lwinmm",
                 "-lws2_32",
+                "-mwindows",
 			],
 			"options": {
 				"cwd": "C:\\MinGW\\bin"

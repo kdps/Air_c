@@ -10,6 +10,9 @@
         "*.tcc": "c",
         "datetime.h": "c",
         "audio_windows.h": "c",
-        "mmsystem.h": "c"
+        "mmsystem.h": "c",
+        "time.h": "c",
+        "tchar.h": "c",
+        "random": "c"
     }
 }

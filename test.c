@@ -1,41 +1,65 @@
 #include <stdio.h>
+#include <windows.h>
 #include <winsock2.h>
+#include <tchar.h>
 #include "file_system.h"
 #include "network_windows.h"
 #include "datetime.h"
 #include "windows.h"
 #include "audio_windows.h"
 
-int main()
+LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam);
+
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int nCmdShow)
 {
-  struct file_contents *filecontents; 
-  filecontents = get_file_contents("test.txt");
+	HWND hwnd;
+	MSG msg;
+	WNDCLASS WndClass;
+	WndClass.style = CS_HREDRAW | CS_VREDRAW;	
+	WndClass.lpfnWndProc = WndProc;	
+	WndClass.cbClsExtra = 0;
+	WndClass.cbWndExtra = 0;
+	WndClass.hInstance = hInstance;
+	WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	WndClass.hbrBackground = (HBRUSH)CreateSolidBrush(RGB(255, 255, 255));
+	WndClass.lpszMenuName = NULL;	
+	WndClass.lpszClassName = _T("Windows Class Name");
+	RegisterClass(&WndClass);	
+	hwnd = create_general_window(hInstance, "Windows Class Name", "Sample Windows");
+	ShowWindow(hwnd, nCmdShow);
+	UpdateWindow(hwnd);
 
-  printf("%s", filecontents->data);
-  printf("\n");
-  printf("%d", filecontents->size);
-  printf("\n");
+	while (GetMessage(&msg, NULL, 0, 0))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
 
-  file_put_contents("test2.txt", "Hello World");
+	return (int)msg.wParam;
+}
 
-  filelist *file_list = get_filelist("./");
+LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
+{
+	PAINTSTRUCT ps;
+  HDC hdc;
 
-  for (int i=0;i<file_list->len;i++) {
-    printf(file_list->items[i]);
-    printf("\n");
-  }
-
-  char *http_response;
-
-  http_response = http_send_raw_and_receive(PF_INET, "www.google.co.kr", 80, "GET / HTTP/1.1\r\nHost: www.google.co.kr\r\n\r\n");
-
-  printf("%s", http_response);
-  printf("\n");
-
-  printf("%d", get_timestamp());
-  printf("\n");
-
-  printf("%d", get_screen_width());
-
-  return 0;
+	switch (iMsg)
+	{
+    case WM_CREATE:
+      break;
+    case WM_PAINT:
+      hdc = BeginPaint(hwnd, &ps);
+      
+      paint_text(hdc, hwnd, ps, "TEXT", 0, 0);
+      paint_text(hdc, hwnd, ps, "TEXT", 0, 100);
+      
+      EndPaint(hwnd, &ps);
+      break;
+    case WM_DESTROY:
+      PostQuitMessage(0);
+      break;
+	}
+  
+	return DefWindowProc(hwnd, iMsg, wParam, lParam);
 }
