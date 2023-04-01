@@ -8,5 +8,8 @@ int main()
 
   printf("%s", filecontents->data);
   printf("%d", filecontents->size);
+
+  file_put_contents("test2.txt", "Hello World");
+
   return 0;
 }

@@ -16,4 +16,6 @@ extern int *is_block_device(char *path);
 
 extern struct file_contents *get_file_contents(char *path);
 
+extern int *file_put_contents(char *path, char *text);
+
 #endif

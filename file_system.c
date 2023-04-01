@@ -155,3 +155,21 @@ struct file_contents *get_file_contents(char *path)
 
   return filecontents;
 }
+
+int *file_put_contents(char *path, char *text)
+{
+  FILE *fptr;
+
+  fptr = fopen(path,"w");
+
+  if(fptr == NULL)
+  {
+    return 0;          
+  }
+
+  fprintf(fptr, "%s", text);
+
+  fclose(fptr); 
+  
+  return (int *)1;
+}
