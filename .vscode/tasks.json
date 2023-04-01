@@ -94,8 +94,11 @@
 				"-g",
 				"${file}",
 				"${fileDirname}\\file_system.c",
+				"${fileDirname}\\network_windows.c",
 				"-o",
-				"${fileDirname}\\${fileBasenameNoExtension}.exe"
+				"${fileDirname}\\${fileBasenameNoExtension}.exe",
+                
+                "-lws2_32",
 			],
 			"options": {
 				"cwd": "C:\\MinGW\\bin"

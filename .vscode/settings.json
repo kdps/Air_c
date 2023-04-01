@@ -3,6 +3,10 @@
         "stdio.h": "c",
         "file_system.h": "c",
         "types.h": "c",
-        "winsock.h": "c"
+        "winsock.h": "c",
+        "winsock2.h": "c",
+        "network_windows.h": "c",
+        "windows.h": "c",
+        "*.tcc": "c"
     }
 }
