@@ -1,13 +1,18 @@
+#include <stdio.h>
 #include <windows.h>
 #include <tchar.h>
 #include "windows.h"
+
+void append_menu_with_tag(HMENU hMenu, char *title, UINT tag) {
+    AppendMenu(hMenu, MF_STRING | MF_POPUP, tag, title);
+}
 
 void append_menu_with_sub(HMENU hMenu, char *title, HMENU sub) {
     AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT) sub, title);
 }
 
 void append_menu(HMENU hMenu, char *title) {
-    AppendMenu(hMenu, MF_STRING | MF_POPUP, 0, title);
+    AppendMenu(hMenu, MF_STRING | MF_POPUP, 100, title);
 }
 
 void message_box(char *title, char *message) {

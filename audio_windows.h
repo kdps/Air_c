@@ -7,4 +7,6 @@ typedef unsigned long  DWORD;
 
 extern void play_audio(char *path);
 
+extern int play_midi(char *path);
+
 #endif

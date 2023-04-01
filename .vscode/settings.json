@@ -13,6 +13,7 @@
         "mmsystem.h": "c",
         "time.h": "c",
         "tchar.h": "c",
-        "random": "c"
+        "random": "c",
+        "conio.h": "c"
     }
 }
