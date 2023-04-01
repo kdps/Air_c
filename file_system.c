@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <stdlib.h>
+#include <dirent.h>
 #include "file_system.h"
 
 #define O_RDONLY         00
@@ -172,4 +174,30 @@ int *file_put_contents(char *path, char *text)
   fclose(fptr); 
   
   return (int *)1;
+}
+
+filelist *get_filelist(char *path) 
+{
+  filelist *collection; // TODO => change to stack
+
+  collection = malloc(sizeof *collection + (sizeof collection->items[0] * 1000));
+  collection->len = 0;
+
+  DIR *dp;
+  struct dirent *ep;     
+  dp = opendir(path);
+  if (dp != NULL)
+  {
+    while ((ep = readdir (dp)) != NULL) {
+      int len = collection->len++;
+      collection->items[len] = ep->d_name;
+    }
+          
+    (void) closedir (dp);
+    return collection;
+  }
+  else
+  {
+    return 0;
+  }
 }

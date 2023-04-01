@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "file_system.h": "c",
+        "types.h": "c",
+        "winsock.h": "c"
     }
 }
