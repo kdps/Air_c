@@ -56,37 +56,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 	return (int)msg.wParam;
 }
 
-void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2)
-{
-	switch(wMsg) {
-	case MIM_OPEN:
-		printf("wMsg=MIM_OPEN\n");
-		break;
-	case MIM_CLOSE:
-		printf("wMsg=MIM_CLOSE\n");
-		break;
-	case MIM_DATA:
-		printf("wMsg=MIM_DATA, dwInstance=%08x, dwParam1=%08x, dwParam2=%08x\n", dwInstance, dwParam1, dwParam2);
-		break;
-	case MIM_LONGDATA:
-		printf("wMsg=MIM_LONGDATA\n"); 
-		break;
-	case MIM_ERROR:
-		printf("wMsg=MIM_ERROR\n");
-		break;
-	case MIM_LONGERROR:
-		printf("wMsg=MIM_LONGERROR\n");
-		break;
-	case MIM_MOREDATA:
-		printf("wMsg=MIM_MOREDATA\n");
-		break;
-	default:
-		printf("wMsg = unknown\n");
-		break;
-	}
-	return;
-}
-
 // Window Procedure
 LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -109,12 +78,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
         case WM_COMMAND:
 			printf("%d", wParam);
 
-			
-			play_midi("110BPM_Piano_v1229a.mid");
-
 			switch(LOWORD(wParam))
             {
-				
+				case 150:
+					play_midi("110BPM_Piano_v1229a.mid");
             }
 
 			break;
@@ -125,8 +92,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 			hSubMenu = CreatePopupMenu();
 			append_menu(hSubMenu, "&SubMenu");
-			append_menu(hSubMenu, "&SubMenu");
-			append_menu_with_tag(hMenu, "&FirstMenu", 1000);
+			append_menu_with_tag(hSubMenu, "&PlayMidi", 150);
+			append_menu_with_sub(hMenu, "&FirstMenu", hSubMenu);
 
 			SetMenu(hwnd, hMenu);
 

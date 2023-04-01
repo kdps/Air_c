@@ -12,7 +12,7 @@ void append_menu_with_sub(HMENU hMenu, char *title, HMENU sub) {
 }
 
 void append_menu(HMENU hMenu, char *title) {
-    AppendMenu(hMenu, MF_STRING | MF_POPUP, 100, title);
+    AppendMenu(hMenu, MF_STRING | MF_POPUP, 0, title);
 }
 
 void message_box(char *title, char *message) {
