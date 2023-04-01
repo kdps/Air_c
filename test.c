@@ -8,6 +8,8 @@
 #include "windows.h"
 #include "audio_windows.h"
 
+const char g_szClassName[] = "exampleWindowClass";
+
 LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam);
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int nCmdShow)
@@ -15,6 +17,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 	HWND hwnd;
 	MSG msg;
 	WNDCLASS WndClass;
+
+	// Registering the Window Class
 	WndClass.style = CS_HREDRAW | CS_VREDRAW;	
 	WndClass.lpfnWndProc = WndProc;	
 	WndClass.cbClsExtra = 0;
@@ -24,12 +28,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 	WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	WndClass.hbrBackground = (HBRUSH)CreateSolidBrush(RGB(255, 255, 255));
 	WndClass.lpszMenuName = NULL;	
-	WndClass.lpszClassName = _T("Windows Class Name");
-	RegisterClass(&WndClass);	
-	hwnd = create_general_window(hInstance, "Windows Class Name", "Sample Windows");
+	WndClass.lpszClassName = g_szClassName;
+
+	if (!RegisterClass(&WndClass))
+    {
+		return 0;
+	}
+
+	hwnd = create_general_window(hInstance, "exampleWindowClass", "Sample Windows");
+	if(hwnd == NULL)
+    {
+		return 0;
+	}
+
 	ShowWindow(hwnd, nCmdShow);
 	UpdateWindow(hwnd);
 
+	// The Message Loop
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
 		TranslateMessage(&msg);
@@ -38,27 +53,42 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 
 	return (int)msg.wParam;
 }
-
+#define ID_FILE_EXIT 9001
+#define ID_STUFF_GO 9002
+// Window Procedure
 LRESULT CALLBACK WndProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
-  HDC hdc;
+	HDC hdc;
+
+	HMENU hMenu, hSubMenu;
+	HICON hIcon, hIconSm;
 
 	switch (iMsg)
 	{
-    case WM_CREATE:
-      break;
-    case WM_PAINT:
-      hdc = BeginPaint(hwnd, &ps);
-      
-      paint_text(hdc, hwnd, ps, "TEXT", 0, 0);
-      paint_text(hdc, hwnd, ps, "TEXT", 0, 100);
-      
-      EndPaint(hwnd, &ps);
-      break;
-    case WM_DESTROY:
-      PostQuitMessage(0);
-      break;
+		case WM_LBUTTONDOWN:
+			break;
+		case WM_CREATE:
+			hMenu = CreateMenu();
+
+			hSubMenu = CreatePopupMenu();
+			append_menu(hSubMenu, "&SubMenu");
+			append_menu(hSubMenu, "&SubMenu");
+			append_menu_with_sub(hMenu, "&FirstMenu", hSubMenu);
+
+			SetMenu(hwnd, hMenu);
+			break;
+		case WM_PAINT:
+			hdc = BeginPaint(hwnd, &ps);
+			
+			paint_text(hdc, hwnd, ps, "TEXT", 0, 0);
+			paint_text(hdc, hwnd, ps, "TEXT", 0, 100);
+			
+			EndPaint(hwnd, &ps);
+			break;
+		case WM_DESTROY:
+			PostQuitMessage(0);
+			break;
 	}
   
 	return DefWindowProc(hwnd, iMsg, wParam, lParam);

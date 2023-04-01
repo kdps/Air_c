@@ -1,7 +1,19 @@
 #include <windows.h>
 #include <tchar.h>
 #include "windows.h"
- 
+
+void append_menu_with_sub(HMENU hMenu, char *title, HMENU sub) {
+    AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT) sub, title);
+}
+
+void append_menu(HMENU hMenu, char *title) {
+    AppendMenu(hMenu, MF_STRING | MF_POPUP, 0, title);
+}
+
+void message_box(char *title, char *message) {
+    MessageBox(NULL, message, title, MB_ICONEXCLAMATION | MB_OK);
+}
+
 void paint_text(HDC hdc, HWND hwnd, PAINTSTRUCT ps, char *str, int x, int y) {
 	HFONT hFont, oldFont;
     hFont = CreateFont(

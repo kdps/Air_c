@@ -13,4 +13,10 @@ extern HWND create_general_window(HINSTANCE hInstance, char *className, char *wi
 
 extern void paint_text(HDC hdc, HWND hwnd, PAINTSTRUCT ps, char *str, int x, int y);
 
+extern void message_box(char *title, char *message);
+
+extern void append_menu(HMENU hMenu, char *title);
+
+extern void append_menu_with_sub(HMENU hMenu, char *title, HMENU sub);
+
 #endif
